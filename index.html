@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>風民的求票祈願所</title>
+    <!-- 引入 Tailwind CSS 作為主要樣式框架 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 Google Fonts：Noto Sans TC 確保中文字體顯示美觀 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+    
+    <style>
+        body { 
+            font-family: 'Noto Sans TC', sans-serif; 
+            background-color: #fcf9f2; /* 溫暖的紙張背景色 */
+            color: #2d3748; 
+            -webkit-tap-highlight-color: transparent; /* 移除手機點擊閃爍 */
+        }
+        
+        /* 頁面切換的淡入淡出動畫 */
+        .fade-in { animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+        .fade-out { animation: fadeOut 0.5s ease-out forwards; }
+        
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(15px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+        @keyframes fadeOut { 
+            from { opacity: 1; transform: translateY(0); } 
+            to { opacity: 0; transform: translateY(-15px); } 
+        }
+        
+        /* 表單輸入框的共用樣式 */
+        .input-field {
+            width: 100%;
+            border: 2px solid #fde68a; /* amber-200 */
+            border-radius: 0.75rem;
+            padding: 0.75rem 1rem;
+            outline: none;
+            transition: all 0.2s;
+            background-color: white;
+            font-size: 1rem;
+            color: #451a03; /* amber-900 */
+            appearance: none; /* 移除原生選單樣式以便自訂 */
+        }
+        .input-field:focus {
+            border-color: #f59e0b; /* amber-500 */
+            box-shadow: 0 0 0 3px rgba(253, 230, 138, 0.5);
+        }
+        .form-label {
+            display: block;
+            color: #78350f; /* amber-800 */
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+        
+        /* 針對 select 下拉選單加入自訂箭頭 */
+        select.input-field {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2378350f' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.5rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+            padding-right: 2.5rem;
+        }
+        
+        /* 祈願單 (Ticket Slip) 的特殊視覺樣式：純白色，不加點點裝飾 */
+        .ticket-slip {
+            background-color: #ffffff; 
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-16">
+    <!-- 導覽列：置頂顯示在畫面中央 (「風民的求票祈願所」為 18pt 且取消粗體) -->
+    <header class="sticky top-0 z-50 bg-white/85 backdrop-blur-md shadow-sm py-4 border-b border-amber-100">
+        <h1 class="text-center text-[18pt] text-amber-700 tracking-widest font-normal">風民的求票祈願所</h1>
+    </header>
+
+    <main class="max-w-md md:max-w-xl mx-auto px-5 mt-8 overflow-hidden relative">
+        
+        <!-- ==================== 1. 主畫面（初始畫面） ==================== -->
+        <div id="screen-main" class="space-y-12 pb-8">
+            
+            <!-- 區段一 -->
+            <section class="text-center space-y-5 fade-in" style="animation-delay: 0.1s;">
+                <div class="relative inline-block">
+                    <!-- 移除背景裝飾色塊、border-4 border-white 與 onerror 屬性 -->
+                    <img src="1.webp" alt="藤井風" class="w-full max-w-[260px] md:max-w-[300px] mx-auto rounded-2xl shadow-md object-cover aspect-square md:aspect-auto">
+                </div>
+                <div>
+                    <!-- 移除裝飾框與圓角背景，字體大小改為 16pt，顏色統一為 #333333，取消粗體 -->
+                    <h2 class="text-[16pt] text-[#333333] inline-block font-normal">
+                        聽說你想來我的演唱會？
+                    </h2>
+                </div>
+            </section>
+
+            <!-- 區段二 -->
+            <section class="text-center space-y-5 fade-in" style="animation-delay: 0.3s;">
+                <div class="relative inline-block">
+                    <!-- 移除背景裝飾色塊、border-4 border-white 與 onerror 屬性 -->
+                    <img src="2.webp" alt="藤井風" class="w-full max-w-[260px] md:max-w-[300px] mx-auto rounded-2xl shadow-md object-cover aspect-square md:aspect-auto">
+                </div>
+                <div>
+                    <!-- 移除裝飾框與圓角背景，字體大小改為 16pt，顏色統一為 #333333，取消粗體 -->
+                    <h2 class="text-[16pt] text-[#333333] inline-block font-normal">
+                        讓我幫你找個好位置！
+                    </h2>
+                </div>
+            </section>
+
+            <!-- 區段三：資料輸入區 -->
+            <section class="bg-white rounded-[2rem] shadow-xl p-6 md:p-8 border-t-4 border-amber-400 fade-in relative" style="animation-delay: 0.5s;">
+                <!-- 裝飾小icon -->
+                <div class="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-white text-3xl rounded-full p-1 shadow-md">🙏</div>
+                
+                <h3 class="text-xl font-bold text-center mt-2 mb-6 text-gray-800 tracking-wide">祈願資料</h3>
+                
+                <form id="prayerForm" class="space-y-5">
+                    <!-- 姓名 -->
+                    <div>
+                        <label for="userName" class="form-label">姓名</label>
+                        <input type="text" id="userName" required class="input-field" placeholder="希望風神如何稱呼你？">
+                    </div>
+                    
+                    <!-- 票種 -->
+                    <div>
+                        <label for="ticketType" class="form-label">票種</label>
+                        <select id="ticketType" class="input-field cursor-pointer font-medium">
+                            <option value="$5,800｜特A區">$5,800｜特A區</option>
+                            <option value="$4,800｜特B區">$4,800｜特B區</option>
+                            <option value="$4,800｜1F">$4,800｜1F</option>
+                            <option value="$3,800｜1F">$3,800｜1F</option>
+                            <option value="$2,800｜1F">$2,800｜1F</option>
+                            <option value="$3,800｜2F">$3,800｜2F</option>
+                            <option value="$2,800｜2F">$2,800｜2F</option>
+                            <option value="$1,800｜2F">$1,800｜2F</option>
+                        </select>
+                    </div>
+
+                    <!-- 張數 -->
+                    <div>
+                        <label for="ticketCount" class="form-label">張數</label>
+                        <select id="ticketCount" class="input-field cursor-pointer font-medium">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </div>
+
+                    <!-- 祈願備註 -->
+                    <div>
+                        <label for="prayerNotes" class="form-label">祈願備註</label>
+                        <textarea id="prayerNotes" rows="3" class="input-field resize-none" placeholder="如：希望位置在非視線遮蔽區"></textarea>
+                    </div>
+
+                    <!-- 送出按鈕 (調整為更乾淨、具備高級質感的溫和黃棕色) -->
+                    <div class="pt-4">
+                        <button type="submit" class="w-full bg-[#F0B929] hover:bg-[#d8a31e] text-white font-black text-xl py-4 rounded-xl shadow-md transform hover:scale-[1.02] transition-all active:scale-95 flex items-center justify-center space-x-2">
+                            <span>開始祈願</span>
+                        </button>
+                    </div>
+                </form>
+            </section>
+        </div>
+
+        <!-- ==================== 2. 祈願畫面 (讀取中) ==================== -->
+        <div id="screen-praying" class="hidden flex-col items-center justify-center min-h-[70vh] space-y-10 fade-in">
+            <div class="relative flex justify-center w-full">
+                <!-- 發光閃爍背景 -->
+                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-yellow-300 w-48 h-48 rounded-full blur-3xl opacity-60 animate-pulse"></div>
+                <!-- 移除 onerror 屬性 -->
+                <img src="DANCE.gif" alt="祈願中" class="relative w-64 h-64 md:w-72 md:h-72 object-contain z-10 drop-shadow-2xl">
+            </div>
+            <h2 class="text-xl md:text-2xl font-black text-amber-800 text-center leading-relaxed tracking-widest animate-pulse px-4">
+                天靈靈，地靈靈<br>適合你的位子在哪裡～
+            </h2>
+        </div>
+
+        <!-- ==================== 3. 祈願結果頁 ==================== -->
+        <div id="screen-result" class="hidden space-y-10 pb-8">
+            
+            <!-- 區段一：祈願成功 -->
+            <section class="text-center space-y-4 fade-in pt-4" style="animation-delay: 0.1s;">
+                <h2 class="text-3xl md:text-4xl font-black text-amber-700 drop-shadow-sm mb-6 tracking-wide">祈願成功！</h2>
+                
+                <div class="relative inline-block w-full px-6">
+                    <!-- 移除 onerror 屬性 -->
+                    <img src="3.webp" alt="祈願成功" class="w-full max-w-[280px] md:max-w-[320px] mx-auto rounded-3xl shadow-xl border-[6px] border-white object-cover bg-white">
+                </div>
+                
+                <div class="mt-6 mx-auto w-full max-w-sm">
+                    <p class="text-base md:text-lg font-bold text-red-800 leading-relaxed bg-red-50 border-2 border-red-100 p-4 rounded-xl shadow-sm">
+                        6/20（六）中午 12:00<br>
+                        記得準時去 KKTIX 領票！
+                    </p>
+                </div>
+            </section>
+
+            <!-- 區段二：祈願單呈現 -->
+            <section class="fade-in" style="animation-delay: 0.4s;">
+                <div class="ticket-slip rounded-3xl border-4 border-amber-300 p-6 md:p-8 relative overflow-hidden">
+                    <!-- 裝飾用圖案 -->
+                    <div class="absolute top-0 left-0 w-full h-3 bg-amber-400 opacity-50"></div>
+
+                    <h3 class="text-2xl font-black text-center text-amber-900 mb-6 border-b-2 border-amber-300 pb-4 tracking-widest">祈願單</h3>
+                    
+                    <div class="space-y-4 text-gray-800 text-[15px] md:text-lg">
+                        <div class="flex flex-col sm:flex-row sm:items-start border-b border-amber-200/60 pb-3">
+                            <span class="font-bold text-amber-700 w-24 shrink-0 mb-1 sm:mb-0">風民</span>
+                            <span id="resName" class="font-bold text-gray-900"></span>
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-start border-b border-amber-200/60 pb-3">
+                            <span class="font-bold text-amber-700 w-24 shrink-0 mb-1 sm:mb-0">票種</span>
+                            <span id="resTicket" class="font-bold text-red-600 leading-snug"></span>
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-start border-b border-amber-200/60 pb-3">
+                            <span class="font-bold text-amber-700 w-24 shrink-0 mb-1 sm:mb-0">張數</span>
+                            <span id="resCount" class="font-bold text-gray-900"></span>
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-start pb-3">
+                            <span class="font-bold text-amber-700 w-24 shrink-0 mb-1 sm:mb-0">祈願備註</span>
+                            <span id="resNotes" class="font-medium text-gray-600 whitespace-pre-wrap leading-relaxed"></span>
+                        </div>
+                    </div>
+
+                    <!-- 祈願單底部：FACE 與 文案 (移除 onerror 屬性) -->
+                    <div class="mt-8 pt-6 border-t-2 border-dashed border-amber-400 flex items-center justify-center space-x-3 md:space-x-6">
+                        <span class="text-xl md:text-2xl font-black text-amber-900 whitespace-nowrap">好人有好報</span>
+                        <img src="FACE.webp" alt="Face" class="w-16 h-16 md:w-20 md:h-20 object-contain drop-shadow-md shrink-0">
+                        <span class="text-xl md:text-2xl font-black text-amber-900 whitespace-nowrap">我一定有票</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 區段三：CTA 按鈕 -->
+            <section class="text-center pt-4 pb-8 fade-in" style="animation-delay: 0.7s;">
+                <a href="https://www.facebook.com/groups/kazetarian/posts/2104648307063698/" target="_blank" rel="noopener noreferrer" 
+                   class="inline-flex items-center justify-center space-x-2 w-full bg-[#1877F2] hover:bg-[#166fe5] text-white font-bold text-lg py-4 px-8 rounded-2xl shadow-lg transform hover:-translate-y-1 transition-all">
+                    <!-- FB Icon -->
+                    <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    <span>複習買票指南</span>
+                </a>
+                
+                <!-- 重新祈願按鈕 (方便測試與重複遊玩) -->
+                <button type="button" onclick="resetGame()" class="mt-6 text-sm text-gray-400 hover:text-amber-700 underline font-medium transition-colors">
+                    重寫一張祈願單
+                </button>
+            </section>
+        </div>
+
+    </main>
+
+    <!-- 自訂提示視窗 (取代 alert) -->
+    <div id="messageBox" class="fixed inset-0 bg-black/60 hidden items-center justify-center z-[100] backdrop-blur-sm transition-opacity duration-300 opacity-0 px-4">
+        <div class="bg-white rounded-3xl p-6 md:p-8 max-w-sm w-full shadow-2xl transform scale-95 transition-transform duration-300 border-t-8 border-red-500 text-center">
+            <h3 class="text-xl font-black text-gray-800 mb-3">⚠️ 稍等一下喔</h3>
+            <p id="messageText" class="text-gray-600 mb-6 font-medium"></p>
+            <button onclick="closeMessage()" class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3 rounded-xl transition-colors shadow-md">
+                我知道了
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // 取得 DOM 元素
+        const screenMain = document.getElementById('screen-main');
+        const screenPraying = document.getElementById('screen-praying');
+        const screenResult = document.getElementById('screen-result');
+        const form = document.getElementById('prayerForm');
+        
+        // 提示視窗元素
+        const messageBox = document.getElementById('messageBox');
+        const messageText = document.getElementById('messageText');
+
+        // 顯示自訂提示視窗
+        function showMessage(text) {
+            messageText.textContent = text;
+            messageBox.classList.remove('hidden');
+            messageBox.style.display = 'flex';
+            // 強制瀏覽器重繪以觸發動畫
+            void messageBox.offsetWidth;
+            messageBox.classList.remove('opacity-0');
+            messageBox.querySelector('div').classList.remove('scale-95');
+        }
+
+        // 關閉自訂提示視窗
+        function closeMessage() {
+            messageBox.classList.add('opacity-0');
+            messageBox.querySelector('div').classList.add('scale-95');
+            setTimeout(() => {
+                messageBox.classList.add('hidden');
+                messageBox.style.display = 'none';
+            }, 300);
+        }
+
+        // 處理表單送出事件
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // 防止頁面重新整理
+            
+            // 獲取使用者輸入的值
+            const name = document.getElementById('userName').value.trim();
+            const ticketType = document.getElementById('ticketType').value;
+            const ticketCount = document.getElementById('ticketCount').value;
+            const notes = document.getElementById('prayerNotes').value.trim();
+
+            // 簡易驗證
+            if (!name) {
+                showMessage('請輸入暱稱，風神才知道是誰在祈願喔！');
+                return;
+            }
+
+            // 將資料填入結果頁的「祈願單」中
+            document.getElementById('resName').textContent = name;
+            // 依據規格要求，在票種前方加上固定字串
+            document.getElementById('resTicket').textContent = `Fujii Kaze Prema World Tour - Kaohsiung：${ticketType}`;
+            document.getElementById('resCount').textContent = ticketCount;
+            // 如果沒填備註，給予預設文字
+            document.getElementById('resNotes').textContent = notes || '心誠則靈，風神已經收到你的祈願了✨';
+
+            // 1. 隱藏主畫面，顯示祈願中動畫畫面
+            transitionScreen(screenMain, screenPraying);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // 2. 設定計時器，模擬祈願等待時間 (3.5秒後顯示結果)
+            setTimeout(() => {
+                transitionScreen(screenPraying, screenResult);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 3500);
+        });
+
+        // 畫面轉場邏輯共用函式
+        function transitionScreen(hideElement, showElement) {
+            // 加入淡出動畫
+            hideElement.classList.remove('fade-in');
+            hideElement.classList.add('fade-out');
+            
+            // 等待淡出動畫結束後，切換 DOM 顯示狀態
+            setTimeout(() => {
+                hideElement.classList.add('hidden');
+                hideElement.classList.remove('fade-out', 'flex-col', 'flex');
+                
+                showElement.classList.remove('hidden');
+                // 如果是祈願畫面，需要維持 flex 排版來置中
+                if (showElement.id === 'screen-praying') {
+                    showElement.classList.add('flex', 'flex-col');
+                }
+                // 加入淡入動畫
+                showElement.classList.add('fade-in');
+            }, 500); // 500ms 需與 CSS fade-out 動畫時間一致
+        }
+
+        // 重新祈願 (重置遊戲狀態)
+        function resetGame() {
+            // 清空表單
+            form.reset();
+            // 從結果頁切換回主畫面
+            transitionScreen(screenResult, screenMain);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
