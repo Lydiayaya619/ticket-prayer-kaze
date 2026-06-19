@@ -325,13 +325,20 @@
             transitionScreen(screenMain, screenPraying);
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
-            // 2. 設定計時器，模擬祈願等待時間 (8秒後顯示結果)
+            // 【新增優化】：強制重新載入 GIF 確保動畫從第一秒開始播放
+            const gifImg = document.getElementById('praying-gif');
+            if (gifImg) {
+                const currentSrc = gifImg.src.split('?')[0];
+                gifImg.src = currentSrc + '?t=' + new Date().getTime();
+            }
+
+            // 2. 設定計時器，模擬祈願等待時間 (延長至 8 秒以完整播放 GIF)
             setTimeout(() => {
                 transitionScreen(screenPraying, screenResult);
                 window.scrollTo({ top: 0, behavior: 'smooth' });
-            }, 8000);
+            }, 8000); // 這裡由原本的 3500 (3.5秒) 修改為 8000 (8秒)
         });
-
+        
         // 畫面轉場邏輯共用函式
         function transitionScreen(hideElement, showElement) {
             // 加入淡出動畫
