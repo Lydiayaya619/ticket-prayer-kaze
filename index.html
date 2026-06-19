@@ -325,11 +325,11 @@
             transitionScreen(screenMain, screenPraying);
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
-            // 2. 設定計時器，模擬祈願等待時間 (3.5秒後顯示結果)
+            // 2. 設定計時器，模擬祈願等待時間 (8秒後顯示結果)
             setTimeout(() => {
                 transitionScreen(screenPraying, screenResult);
                 window.scrollTo({ top: 0, behavior: 'smooth' });
-            }, 3500);
+            }, 8000);
         });
 
         // 畫面轉場邏輯共用函式
